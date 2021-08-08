@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Ventas" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Compras" />
+        <item
+            android:id="@+id/proveedorFragment"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Proveedor" />
+        <item
+            android:id="@+id/productoFragment"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Producto" />
+        <item
+            android:id="@+id/clienteFragment"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Cliente" />
+        <item
+            android:id="@+id/vendedorFragment"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Vendedores" />
+    </group>
+</menu>
