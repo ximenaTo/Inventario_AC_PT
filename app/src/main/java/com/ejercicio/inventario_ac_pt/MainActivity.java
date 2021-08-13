@@ -1,9 +1,12 @@
 package com.ejercicio.inventario_ac_pt;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Toast;
 
+import com.ejercicio.inventario_ac_pt.BD.DBHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -39,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        //Para crear base de datos
+        DBHelper dbHelper = new DBHelper(MainActivity.this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        if(db !=null){
+            Toast.makeText(MainActivity.this, "db creado", Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(MainActivity.this, "db no creado", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

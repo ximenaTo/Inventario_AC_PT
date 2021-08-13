@@ -78,6 +78,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "unidad_c TEXT NOT NULL,"+
                 "cantidad_c INTEGER NOT NULL,"+
                 "importe_c INTEGER NOT NULL,"+
+                "idProveedor_c INTEGER NOT NULL,"+
+                "idProducto_c INTEGER NOT NULL,"+
                 "FOREIGN KEY(idProveedor_c) REFERENCES "+ TABLE_PROVEEDOR +"(idProveedor)," +
                 "FOREIGN KEY(idProducto_c) REFERENCES "+ TABLE_PRODUCTO +"(idProducto))");
 
@@ -88,6 +90,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 "unidad_ve TEXT NOT NULL,"+
                 "cantidad_ve INTEGER NOT NULL,"+
                 "importe_ve INTEGER NOT NULL,"+
+                "idProducto_v INTEGER NOT NULL,"+
+                "idProveedor_v INTEGER NOT NULL,"+
+                "idCliente_v INTEGER NOT NULL,"+
                 "FOREIGN KEY(idCliente_v) REFERENCES "+ TABLE_CLIENTE +"(idCliente)," +
                 "FOREIGN KEY(idProducto_v) REFERENCES "+ TABLE_PRODUCTO +"(idProducto)," +
                 "FOREIGN KEY(idProveedor_v) REFERENCES "+ TABLE_VENDEDOR +"(idProveedor))");
