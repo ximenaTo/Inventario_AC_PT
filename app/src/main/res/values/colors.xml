@@ -7,6 +7,13 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="agregar">#FFFFFFFF</color>
+
+    <color name="alta">#00B74A</color>
+    <color name="baja">#F93154</color>
+    <color name="modif">#FFA900</color>
+    <color name="buscar">#39C0ED</color>
+    <color name="lista">#1266F1</color>
+
+
 
 </resources>

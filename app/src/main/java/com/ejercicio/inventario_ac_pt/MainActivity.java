@@ -43,13 +43,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         //Para crear base de datos
-        DBHelper dbHelper = new DBHelper(MainActivity.this);
+       /*DBHelper dbHelper = new DBHelper(MainActivity.this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if(db !=null){
             Toast.makeText(MainActivity.this, "db creado", Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(MainActivity.this, "db no creado", Toast.LENGTH_LONG).show();
-        }
+        }*/
     }
 
     @Override
