@@ -34,7 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "colonia_v TEXT NOT NULL,"+
                 "telefono_v TEXT NOT NULL,"+
                 "email_v TEXT NOT NULL,"+
-                "comisiones_v INTEGER NOT NULL)");
+                "comisiones_v FLOAT NOT NULL)");
 
         sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_CLIENTE + "(" +
                 "idCliente INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -89,6 +89,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "fecha_ve TEXT NOT NULL,"+
                 "unidad_ve TEXT NOT NULL,"+
                 "cantidad_ve INTEGER NOT NULL,"+
+                "comision_ve FLOAT NOT NULL ,"+
                 "importe_ve INTEGER NOT NULL,"+
                 "idProducto_v INTEGER NOT NULL,"+
                 "idProveedor_v INTEGER NOT NULL,"+
