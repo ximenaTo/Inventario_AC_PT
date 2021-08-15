@@ -46,7 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "RFC_c TEXT NOT NULL,"+
                 "telefono_c TEXT NOT NULL,"+
                 "email_c TEXT NOT NULL,"+
-                "saldo_c INTEGER  NOT NULL)");
+                "saldo_c FLOAT  NOT NULL)");
 
         sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_PROVEEDOR + "(" +
                 "idProveedor INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -58,7 +58,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "RFC_pr TEXT NOT NULL,"+
                 "telefono_pr TEXT NOT NULL,"+
                 "email_pr TEXT NOT NULL,"+
-                "saldo_pr INTEGER NOT NULL)");
+                "saldo_pr FLOAT NOT NULL)");
 
         sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_PRODUCTO + "(" +
                 "idProducto INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -66,10 +66,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 "nombre_p TEXT NOT NULL,"+
                 "linea_p TEXT NOT NULL,"+
                 "existencia_p TEXT NOT NULL,"+
-                "precioCosto_p INTEGER  NOT NULL,"+
-                "precioPromedio_p INTEGER  NOT NULL,"+
-                "precioVenta1_p INTEGER  NOT NULL,"+
-                "precioventa2_p INTEGER  NOT NULL)");
+                "precioCosto_p FLOAT  NOT NULL,"+
+                "precioPromedio_p FLOAT  NOT NULL,"+
+                "precioVenta1_p FLOAT  NOT NULL,"+
+                "precioventa2_p FLOAT  NOT NULL)");
 
         sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_COMPRAS + "(" +
                 "idCompra INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -90,7 +90,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "unidad_ve TEXT NOT NULL,"+
                 "cantidad_ve INTEGER NOT NULL,"+
                 "comision_ve FLOAT NOT NULL ,"+
-                "importe_ve INTEGER NOT NULL,"+
+                "importe_ve FLOAT NOT NULL,"+
                 "idProducto_v INTEGER NOT NULL,"+
                 "idProveedor_v INTEGER NOT NULL,"+
                 "idCliente_v INTEGER NOT NULL,"+
