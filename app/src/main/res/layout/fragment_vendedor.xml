@@ -136,7 +136,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button8"
+                android:id="@+id/btnBajaV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -150,7 +150,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button9"
+                android:id="@+id/btnModiV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -268,7 +268,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnAltaVe"
+                android:id="@+id/btnAltaV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -283,7 +283,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnBiscarVe"
+                android:id="@+id/btnBiscarV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
