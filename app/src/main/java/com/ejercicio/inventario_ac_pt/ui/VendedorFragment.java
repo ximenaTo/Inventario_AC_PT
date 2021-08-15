@@ -1,6 +1,5 @@
 package com.ejercicio.inventario_ac_pt.ui;
 
-import android.app.AlertDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -43,19 +42,26 @@ public class VendedorFragment extends Fragment {
         txtEmail = (EditText) root.findViewById(R.id.txtEmailVe);
         txtComision = (EditText) root.findViewById(R.id.txtComisionVe);
 
-        btnAlta = (Button) root.findViewById(R.id.btnAltaVe);
-        btnBuscar = (Button) root.findViewById(R.id.btnBiscarVe);
+        btnAlta = (Button) root.findViewById(R.id.btnAltaV);
+        btnBaja = (Button) root.findViewById(R.id.btnBajaV);
+        btnBuscar = (Button) root.findViewById(R.id.btnBiscarV);
+        btnModif = (Button) root.findViewById(R.id.btnModiV);
+
 
         tblVendedores = (TableLayout) root.findViewById(R.id.tblVendedores);
 
-        listaVendedores();
+        listaVendedores(1);
 
         btnAlta.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                insertar();
-            }});
+            public void onClick(View v) { insertar();}});
 
+        btnBaja.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {eliminar(); }});
+        btnModif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { modificar(); }});
 
 
         btnBuscar.setOnClickListener(new View.OnClickListener() {
@@ -85,16 +91,60 @@ public class VendedorFragment extends Fragment {
         );
         if(id >0){
             Toast.makeText(getActivity(), "Registro guardado", Toast.LENGTH_LONG).show();
-            listaVendedores();
+            listaVendedores(2);
             limpiar();
         }else {
             Toast.makeText(getActivity(), "Error al guardar el registro", Toast.LENGTH_LONG).show();
         }
     }
-    public void listaVendedores(){
+    private void eliminar(){
+        DBVendedor dbVendedor = new DBVendedor(getActivity());
+        boolean eliminado = dbVendedor.eliminarVendedor(txtClaveV.getText().toString());
+        if(eliminado == true){
+            Toast.makeText(getActivity(), "Registro eliminado", Toast.LENGTH_LONG).show();
+            listaVendedores(0);
+            limpiar();
+        }else {
+            Toast.makeText(getActivity(), "Error eliminado el registro", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private  void modificar(){
+        DBVendedor dbVendedor = new DBVendedor(getActivity());
+
+        boolean insertado= dbVendedor.modificarVendedor(
+                txtClaveV.getText().toString(),
+                txtNombreV.getText().toString(),
+                txtCalle.getText().toString(),
+                txtColonia.getText().toString(),
+                txtTelefono.getText().toString(),
+                txtEmail.getText().toString(),
+                Float.parseFloat(txtComision.getText().toString())
+        );
+        if(insertado == true){
+            Toast.makeText(getActivity(), "Registro modificado", Toast.LENGTH_LONG).show();
+            listaVendedores(3);
+            limpiar();
+        }else {
+            Toast.makeText(getActivity(), "Error al modificar el registro", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    public void listaVendedores(int estatus){
         ArrayList<Vendedor> listaVendedor;
         DBVendedor dbVendedor = new DBVendedor(getActivity());
         listaVendedor = new ArrayList<>(dbVendedor.listaVendedores());
+
+        if(estatus == 2){
+           tblVendedores.removeViews(1,listaVendedor.size()-1);
+        }
+        if(estatus == 0){
+            tblVendedores.removeViews(1,listaVendedor.size()+1);
+        }
+        if(estatus == 3){
+            tblVendedores.removeViews(1,listaVendedor.size());
+        }
 
         for(Vendedor vendedor: listaVendedor)
         {
@@ -121,6 +171,7 @@ public class VendedorFragment extends Fragment {
             }
             tblVendedores.addView(tableRow);
         }
+
     }
 
     private  void buscarVendedor(String palabra){
@@ -147,6 +198,10 @@ public class VendedorFragment extends Fragment {
         txtTelefono.setText("");
         txtEmail.setText("");
         txtComision.setText("");
+    }
+
+    private void refrescarTabla(int size){
+
     }
 
 

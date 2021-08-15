@@ -45,6 +45,33 @@ public class DBVendedor extends DBHelper {
         }
         return id;
     }
+    public boolean modificarVendedor(String clave, String nombre, String calle,
+                                     String colonio, String telefono, String email, float comision){
+        boolean modificado =false;
+        try{
+            DBHelper dbHelper = new DBHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.execSQL("UPDATE " + TABLE_VENDEDOR + " SET nombre_v = '"+nombre+"', " + "calle_v = '"+ calle+"', " + "colonia_v = '"+ colonio+"', " + "telefono_v = '"+ telefono+"', " + "email_v = '"+ email+"', " + "comisiones_v = '"+comision  + "' where clave_v = '"+clave+"';");
+            modificado = true;
+        }catch (Exception e){
+            e.toString();
+        }
+        return modificado;
+
+    }
+
+    public boolean eliminarVendedor(String clave){
+        boolean eliminado =false;
+        try{
+            DBHelper dbHelper = new DBHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.execSQL(" DELETE  from " + TABLE_VENDEDOR +" where clave_v = '"+ clave+"';");
+            eliminado = true;
+        }catch (Exception e){
+            e.toString();
+        }
+        return eliminado;
+    }
 
     public Vendedor buscarVendedor(String clave){
         DBVendedor dbVendedor= new DBVendedor(context);
