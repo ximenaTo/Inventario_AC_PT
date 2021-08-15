@@ -200,9 +200,7 @@ public class VendedorFragment extends Fragment {
         txtComision.setText("");
     }
 
-    private void refrescarTabla(int size){
-
-    }
+   
 
 
 
