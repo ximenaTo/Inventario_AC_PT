@@ -97,8 +97,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(idCliente_v) REFERENCES "+ TABLE_CLIENTE +"(idCliente)," +
                 "FOREIGN KEY(idProducto_v) REFERENCES "+ TABLE_PRODUCTO +"(idProducto)," +
                 "FOREIGN KEY(idProveedor_v) REFERENCES "+ TABLE_VENDEDOR +"(idProveedor))");
-
-
     }
 
     @Override
