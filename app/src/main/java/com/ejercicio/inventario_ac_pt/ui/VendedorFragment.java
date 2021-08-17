@@ -1,10 +1,14 @@
 package com.ejercicio.inventario_ac_pt.ui;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,14 +24,29 @@ import android.widget.Toast;
 import com.ejercicio.inventario_ac_pt.BD.DBVendedor;
 import com.ejercicio.inventario_ac_pt.R;
 import com.ejercicio.inventario_ac_pt.entidades.Vendedor;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class VendedorFragment extends Fragment {
 
     EditText txtClaveV,txtNombreV,txtCalle,txtColonia,txtTelefono, txtEmail, txtComision;
-    Button btnAlta, btnBaja, btnModif, btnBuscar;
+    Button btnAlta, btnBaja, btnModif, btnBuscar, btnPDF;
     TableLayout tblVendedores;
+
+    String NOMBRE_DIRECTORIO = "ProyectoPDFS";
+    String NOMBRE_DOCUMENTO = "ReporteVendedores.pdf";
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,11 +65,14 @@ public class VendedorFragment extends Fragment {
         btnBaja = (Button) root.findViewById(R.id.btnBajaV);
         btnBuscar = (Button) root.findViewById(R.id.btnBiscarV);
         btnModif = (Button) root.findViewById(R.id.btnModiV);
+        btnPDF = (Button) root.findViewById(R.id.btnPDF);
 
 
         tblVendedores = (TableLayout) root.findViewById(R.id.tblVendedores);
 
         listaVendedores(1);
+
+
 
         btnAlta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,8 +93,13 @@ public class VendedorFragment extends Fragment {
                 buscarVendedor(palabra);
             }
         });
-
-
+        btnPDF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                crearPDFvendedores();
+                Toast.makeText(getActivity(), "SE CREO EL PDF", Toast.LENGTH_LONG).show();
+            }
+        });
 
 
         return root;
@@ -200,7 +227,76 @@ public class VendedorFragment extends Fragment {
         txtComision.setText("");
     }
 
-   
+    public void crearPDFvendedores() {
+        ArrayList<Vendedor> listaVendedor;
+        DBVendedor dbVendedor = new DBVendedor(getActivity());
+        listaVendedor = new ArrayList<>(dbVendedor.listaVendedores());
+        Document documento = new Document();
+        try {
+            File file = crearFichero(NOMBRE_DOCUMENTO);
+            FileOutputStream ficheroPDF = new FileOutputStream(file.getAbsolutePath());
+            PdfWriter writer = PdfWriter.getInstance(documento, ficheroPDF);
+
+            //AGREGACION DE LA BASE DE DATOS
+
+            documento.open();
+            documento.add(new Paragraph("REPORTE DE VENDEDORES \n\n"));
+
+            // Insertamos una tabla
+            PdfPTable tabla = new PdfPTable(7);
+            tabla.addCell("Clave");
+            tabla.addCell("Nombre");
+            tabla.addCell("Calle");
+            tabla.addCell("Colonia");
+            tabla.addCell("Telefono");
+            tabla.addCell("Email");
+            tabla.addCell("Comision");
+
+            for(Vendedor vendedor: listaVendedor){
+                tabla.addCell(vendedor.getClave());
+                tabla.addCell(vendedor.getNombre());
+                tabla.addCell(vendedor.getCalle());
+                tabla.addCell(vendedor.getColonio());
+                tabla.addCell(vendedor.getTelefono());
+                tabla.addCell(vendedor.getEmail());
+                tabla.addCell(vendedor.getComision()+"");
+
+            }
+            documento.add(tabla);
+
+        } catch(DocumentException e) {
+        } catch(IOException e) {
+        } finally {
+            documento.close();
+        }
+    }
+
+    public File crearFichero(String nombreFichero) {
+        File ruta = getRuta();
+
+        File fichero = null;
+        if(ruta != null) {
+            fichero = new File(ruta, nombreFichero);
+        }
+        return fichero;
+    }
+
+
+    public File getRuta() {
+        File ruta = null;
+        if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            ruta = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), NOMBRE_DIRECTORIO);
+            if(ruta != null) {
+                if(!ruta.mkdirs()) {
+                    if(!ruta.exists()) {
+                        return null;
+                    }
+                }
+            }
+        }
+        return ruta;
+    }
+
 
 
 
