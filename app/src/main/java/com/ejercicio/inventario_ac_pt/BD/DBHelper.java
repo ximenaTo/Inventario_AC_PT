@@ -69,7 +69,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "linea_p TEXT NOT NULL,"+
                 "existencia_p TEXT NOT NULL,"+
                 "precioCosto_p FLOAT  NOT NULL,"+
-                "precioPromedio_p FLOAT  NOT NULL,"+
+                "precioPromedio_p FLOAT  NOT NULL DEFAULT 0.0,"+
                 "precioVenta1_p FLOAT  NOT NULL,"+
                 "precioventa2_p FLOAT  NOT NULL)");
 

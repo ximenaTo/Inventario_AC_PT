@@ -127,8 +127,8 @@ public class DBProducto extends DBHelper {
             producto.setLinea_p(cursor.getString(3));
             producto.setExistencia_p(cursor.getString(4));
             producto.setPrecioCosto_p(cursor.getFloat(5));
-            producto.setPrecioVenta1_p(cursor.getFloat(6));
-            producto.setPrecioventa2_p(cursor.getFloat(7));
+            producto.setPrecioVenta1_p(cursor.getFloat(7));
+            producto.setPrecioventa2_p(cursor.getFloat(8));
             //producto.setPrecioPromedio_p(cursor.getFloat(8));
 
         }

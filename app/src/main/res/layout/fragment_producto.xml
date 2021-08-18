@@ -272,7 +272,7 @@
     <LinearLayout
         android:id="@+id/linearLayout8"
         android:layout_width="144dp"
-        android:layout_height="104dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -306,7 +306,21 @@
                 android:text="@string/mod" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnPDFPro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="PDF" />
+        </LinearLayout>
+
     </LinearLayout>
+
 
     <HorizontalScrollView
         android:layout_width="1148dp"
