@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,14 +22,26 @@ import com.ejercicio.inventario_ac_pt.BD.DBProveedor;
 import com.ejercicio.inventario_ac_pt.BD.DBVendedor;
 import com.ejercicio.inventario_ac_pt.R;
 import com.ejercicio.inventario_ac_pt.entidades.Proveedor;
+import com.ejercicio.inventario_ac_pt.entidades.Vendedor;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class ProveedorFragment extends Fragment {
     EditText txtClavePr,txtNombrePr,txtCallePr,txtColoniaPr,txtCiudadPr,txtrfcPr, txtTelefonoPr, txtEmailPr, txtSaldoPr;
-    Button btnAltaPr, btnBajaPr, btnModifPr, btnBuscarPr;
+    Button btnAltaPr, btnBajaPr, btnModifPr, btnBuscarPr, btnPDF;
     TableLayout tblProveedores;
+
+    String NOMBRE_DIRECTORIO = "ProyectoPDFS";
+    String NOMBRE_DOCUMENTO = "ReporteProveedores.pdf";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +61,7 @@ public class ProveedorFragment extends Fragment {
         btnBajaPr = (Button) root.findViewById(R.id.btnBajaPr);
         btnModifPr = (Button) root.findViewById(R.id.btnModPr);
         btnBuscarPr = (Button) root.findViewById(R.id.btnBuscarPr);
+        btnPDF = (Button) root.findViewById(R.id.btnPDFProv);
 
 
         tblProveedores = (TableLayout) root.findViewById(R.id.tblProveedores);
@@ -73,8 +87,17 @@ public class ProveedorFragment extends Fragment {
             }
         });
 
+        btnPDF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                crearPDFvendedores();
+                Toast.makeText(getActivity(), "SE CREO EL PDF", Toast.LENGTH_LONG).show();
+            }
+        });
+
         return root;
     }
+
 
     private void insertarProveedor(){
         DBProveedor dbProveedor = new DBProveedor(getActivity());
@@ -205,5 +228,81 @@ public class ProveedorFragment extends Fragment {
         txtTelefonoPr.setText("");
         txtEmailPr.setText("");
         txtSaldoPr.setText("");
+    }
+
+
+    public void crearPDFvendedores() {
+        ArrayList<Proveedor> listaProveedor;
+        DBProveedor dbProveedor = new DBProveedor(getActivity());
+        listaProveedor = new ArrayList<>(dbProveedor.listaProveedores());
+        Document documento = new Document();
+        try {
+            File file = crearFichero(NOMBRE_DOCUMENTO);
+            FileOutputStream ficheroPDF = new FileOutputStream(file.getAbsolutePath());
+            PdfWriter writer = PdfWriter.getInstance(documento, ficheroPDF);
+
+            //AGREGACION DE LA BASE DE DATOS
+
+            documento.open();
+            documento.add(new Paragraph("REPORTE DE PROVEEDORES \n\n"));
+
+            // Insertamos una tabla
+            PdfPTable tabla = new PdfPTable(9);
+            tabla.addCell("Clave");
+            tabla.addCell("Nombre");
+            tabla.addCell("Calle");
+            tabla.addCell("Colonia");
+            tabla.addCell("Ciudad");
+            tabla.addCell("RFC");
+            tabla.addCell("Telefono");
+            tabla.addCell("Email");
+            tabla.addCell("Saldo");
+
+            for(Proveedor proveedor: listaProveedor){
+                tabla.addCell(proveedor.getClave_pr());
+                tabla.addCell(proveedor.getNombre_pr());
+                tabla.addCell(proveedor.getCalle_pr());
+                tabla.addCell(proveedor.getColonia_pr());
+                tabla.addCell(proveedor.getCiudad_pr());
+                tabla.addCell(proveedor.getRFC_pr());
+                tabla.addCell(proveedor.getTelefono_pr());
+                tabla.addCell(proveedor.getEmail_pr());
+                tabla.addCell(proveedor.getSaldo_pr()+"");
+
+            }
+
+            documento.add(tabla);
+
+        } catch(DocumentException e) {
+        } catch(IOException e) {
+        } finally {
+            documento.close();
+        }
+    }
+
+    public File crearFichero(String nombreFichero) {
+        File ruta = getRuta();
+
+        File fichero = null;
+        if(ruta != null) {
+            fichero = new File(ruta, nombreFichero);
+        }
+        return fichero;
+    }
+
+
+    public File getRuta() {
+        File ruta = null;
+        if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            ruta = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), NOMBRE_DIRECTORIO);
+            if(ruta != null) {
+                if(!ruta.mkdirs()) {
+                    if(!ruta.exists()) {
+                        return null;
+                    }
+                }
+            }
+        }
+        return ruta;
     }
 }

@@ -15,7 +15,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_PROVEEDOR = "proveedor";
     public static final String TABLE_PRODUCTO = "producto";
     public static final String TABLE_COMPRAS = "compras";
+    public static final String TABLE_DETALLE_COMPRA = "detalle_compra";
     public static final String TABLE_VENTAS = "ventas";
+    public static final String TABLE_DETALLE_VENTA = "detalle_venta";
     public static final String TABLE_REPORTES = "reportes";
 
 
@@ -75,28 +77,52 @@ public class DBHelper extends SQLiteOpenHelper {
                 "idCompra INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "clave_c TEXT NOT NULL, "+
                 "fecha_c TEXT NOT NULL,"+
+                "IVA FLOAT NOT NULL,"+
+                "subtotal FLOAT NOT NULL,"+
+                "total FLOAT NOT NULL,"+
+                "idProveedor_c INTEGER NOT NULL," +
+                "idVendedor_c INTEGER NOT NULL," +
+                "FOREIGN KEY(idProveedor_c) REFERENCES "+ TABLE_PROVEEDOR +"(idProveedor),"+
+                "FOREIGN KEY(idVendedor_c) REFERENCES "+ TABLE_VENDEDOR +"(idVendedor))");
+
+        sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_DETALLE_COMPRA + "(" +
+                "idDetalleCompra INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "clave_c TEXT NOT NULL, "+
                 "unidad_c TEXT NOT NULL,"+
                 "cantidad_c INTEGER NOT NULL,"+
-                "importe_c INTEGER NOT NULL,"+
-                "idProveedor_c INTEGER NOT NULL,"+
+                "precio_ve FLOAT NOT NULL,"+
+                "importe_c FLOAT NOT NULL,"+
+                "idCompra INTEGER NOT NULL,"+
                 "idProducto_c INTEGER NOT NULL,"+
-                "FOREIGN KEY(idProveedor_c) REFERENCES "+ TABLE_PROVEEDOR +"(idProveedor)," +
+                "FOREIGN KEY(idCompra) REFERENCES "+ TABLE_COMPRAS +"(idCompra)," +
                 "FOREIGN KEY(idProducto_c) REFERENCES "+ TABLE_PRODUCTO +"(idProducto))");
 
+
+
         sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_VENTAS + "(" +
-                "idCompra INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "idVenta INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "clave_ve TEXT NOT NULL, "+
                 "fecha_ve TEXT NOT NULL,"+
-                "unidad_ve TEXT NOT NULL,"+
-                "cantidad_ve INTEGER NOT NULL,"+
                 "comision_ve FLOAT NOT NULL ,"+
-                "importe_ve FLOAT NOT NULL,"+
                 "idProducto_v INTEGER NOT NULL,"+
-                "idProveedor_v INTEGER NOT NULL,"+
                 "idCliente_v INTEGER NOT NULL,"+
                 "FOREIGN KEY(idCliente_v) REFERENCES "+ TABLE_CLIENTE +"(idCliente)," +
-                "FOREIGN KEY(idProducto_v) REFERENCES "+ TABLE_PRODUCTO +"(idProducto)," +
-                "FOREIGN KEY(idProveedor_v) REFERENCES "+ TABLE_VENDEDOR +"(idProveedor))");
+                "FOREIGN KEY(idProducto_v) REFERENCES "+ TABLE_PRODUCTO +"(idProducto))");
+
+        sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_DETALLE_VENTA + "(" +
+                "idDetalleCompra INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "clave_c TEXT NOT NULL, "+
+                "unidad_ve TEXT NOT NULL,"+
+                "cantidad_ve INTEGER NOT NULL,"+
+                "precio_ve FLOAT NOT NULL,"+
+                "importe_ve FLOAT NOT NULL,"+
+                "idProducto_ve INTEGER NOT NULL,"+
+                "idVenta_ve INTEGER NOT NULL,"+
+                "FOREIGN KEY(idVenta_ve) REFERENCES "+ TABLE_VENTAS +"(idVenta)," +
+                "FOREIGN KEY(idProducto_ve) REFERENCES "+ TABLE_PRODUCTO +"(idProducto))");
+
+
+
     }
 
     @Override
