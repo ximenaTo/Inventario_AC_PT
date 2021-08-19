@@ -1,5 +1,7 @@
 package com.ejercicio.inventario_ac_pt.entidades;
 
+import java.util.ArrayList;
+
 public class Venta {
     int id;
     String clave_ve;
@@ -13,8 +15,17 @@ public class Venta {
     float total;
     Cliente cliente;
     Producto producto;
+    private ArrayList<DetalleVenta> detalleVentaA;
 
     public Venta() {
+    }
+
+    public ArrayList<DetalleVenta> getDetalleVentaA() {
+        return detalleVentaA;
+    }
+
+    public void setDetalleVentaA(ArrayList<DetalleVenta> detalleVentaA) {
+        this.detalleVentaA = detalleVentaA;
     }
 
     public float getSubtotal() {

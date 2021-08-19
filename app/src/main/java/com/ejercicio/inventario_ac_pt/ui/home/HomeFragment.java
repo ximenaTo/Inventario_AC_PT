@@ -169,7 +169,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) { modificar(); }});
 
-          */
+
 
         btnBuscarV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,6 +178,8 @@ public class HomeFragment extends Fragment {
                 buscarVenta(palabra);
             }
         });
+
+          */
 
         return root;
     }
@@ -377,6 +379,7 @@ public class HomeFragment extends Fragment {
                         dv.getIdProducto_ve(),
                         Integer.parseInt(""+idV));
             }
+            System.out.println(""+idV);
             limpiarFinalizar();
         }
 
@@ -388,28 +391,6 @@ public class HomeFragment extends Fragment {
             Toast.makeText(getActivity(), "Error al guardar la venta", Toast.LENGTH_LONG).show();
         }*/
 
-    }
-
-    private  void buscarVenta(String palabra){
-        DetalleVenta dVenta = new DetalleVenta();
-
-        DBDetalleVenta dbDVenta = new DBDetalleVenta(getActivity());
-        dVenta= dbDVenta.buscarVenta(palabra);
-
-        int valorCliente = consultarClientes(dVenta.getVenta().getCliente().getNombre_c());
-        //int valorVendedor = consultarClientes(venta.getVendedor.getNombre);
-
-        if(dVenta !=null){
-            spnClienteV.setSelection(valorCliente);
-            txtClaveCV.setText(dVenta.getVenta().getCliente().getId());
-            txtCalleCliente.setText(dVenta.getVenta().getCliente().getCalle_c());
-            txtFechaVenta.setText(dVenta.getVenta().getFecha_ve());
-            //spnVendedor.setSelection(valorVendedor);
-            //txtPrecioPro.setText(""+producto.getPrecioPromedio_p());
-
-        }else{
-            Toast.makeText(getActivity(), "No se encontro", Toast.LENGTH_LONG).show();
-        }
     }
 
     private void listaClientes(){
@@ -448,8 +429,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void numeroCompra(){
-        DBCompra dbCotizacion = new DBCompra(getActivity());
-        int numeroCompra = dbCotizacion.numeroCompra();
+        DBVenta dbCotizacion = new DBVenta(getActivity());
+        int numeroCompra = dbCotizacion.numeroVenta();
         numeroCompra = numeroCompra+1;
         txtNoVenta.setText(numeroCompra+"");
     }

@@ -43,7 +43,7 @@ public class DBDetalleVenta extends DBHelper {
         }
         return id;
     }
-
+/*
     public DetalleVenta buscarVenta(String clave){
         DBDetalleVenta dbDVenta= new DBDetalleVenta(context);
         SQLiteDatabase  db = dbDVenta.getWritableDatabase();
@@ -97,4 +97,7 @@ public class DBDetalleVenta extends DBHelper {
         return  dVenta;
 
     }
+
+ */
+
 }

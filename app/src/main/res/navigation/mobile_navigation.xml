@@ -57,5 +57,10 @@
         android:name="com.ejercicio.inventario_ac_pt.ui.ReporteVentaFechaFragment"
         android:label="Reporte ventas fecha"
         tools:layout="@layout/fragment_reporte_venta_fecha" />
+    <fragment
+        android:id="@+id/ventaDetalle"
+        android:name="com.ejercicio.inventario_ac_pt.ui.VentaDetalleFragment"
+        android:label="Administración Ventas"
+        tools:layout="@layout/fragment_venta_detalle" />
 
 </navigation>

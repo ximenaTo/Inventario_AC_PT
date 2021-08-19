@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery,R.id.comprasFragment, R.id.nav_slideshow, R.id.productoFragment, R.id.proveedorFragment, R.id.clienteFragment, R.id.vendedorFragment,
+                R.id.nav_home, R.id.ventaDetalle, R.id.nav_gallery,R.id.comprasFragment, R.id.nav_slideshow, R.id.productoFragment, R.id.proveedorFragment, R.id.clienteFragment, R.id.vendedorFragment,
                 R.id.reporteVentaDiaFragment, R.id.reporteVentaFechaFragment)
                 .setDrawerLayout(drawer)
                 .build();
@@ -47,13 +47,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         //Para crear base de datos
-       DBHelper dbHelper = new DBHelper(MainActivity.this);
+       /*DBHelper dbHelper = new DBHelper(MainActivity.this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if(db !=null){
             Toast.makeText(MainActivity.this, "db creado", Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(MainActivity.this, "db no creado", Toast.LENGTH_LONG).show();
-        }
+        }*/
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                 PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                 PackageManager.PERMISSION_GRANTED){

@@ -9,6 +9,10 @@
             android:icon="@drawable/venta"
             android:title="Ventas" />
         <item
+            android:id="@+id/ventaDetalle"
+            android:icon="@drawable/venta"
+            android:title="Administración ventas" />
+        <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/compra"
             android:title="Compras" />
