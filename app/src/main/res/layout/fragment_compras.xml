@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.gallery.GalleryFragment">
+    tools:context=".ui.ComprasFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout9"
@@ -32,17 +32,15 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txtNoCompra"
+            <EditText
+                android:id="@+id/txtBNoCompra"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="6dp"
-                android:text="0"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:ems="10"
+                android:hint="Buscar compra"
+                android:inputType="textPersonName" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -61,12 +59,17 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/cmbProveedorC"
+            <TextView
+                android:id="@+id/txtProveedorD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textAlignment="center" />
+                android:hint="Nombre Proveedor"
+                android:padding="6dp"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -154,93 +157,7 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
-
-        <CheckBox
-            android:id="@+id/chbFacturacion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Facturacion"
-            android:textColor="@color/purple_700"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout10"
-        android:layout_width="386dp"
-        android:layout_height="84dp"
-        android:layout_marginStart="36dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout9"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout9">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView46"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="6dp"
-                android:text="Producto"
-                android:textColor="@color/purple_700"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <Spinner
-                android:id="@+id/cmbProductoC"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="6dp"
-                android:textAlignment="center" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView47"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="6dp"
-                android:text="Cantidad"
-                android:textColor="@color/purple_700"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/txtCantidadProd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Cantidad de producto"
-                android:inputType="number" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btnAgregarPC"
-        android:layout_width="34dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/mas"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout10"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout10" />
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
@@ -445,25 +362,16 @@
         android:id="@+id/linearLayout11"
         android:layout_width="117dp"
         android:layout_height="133dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="504dp"
+        android:layout_marginTop="36dp"
         android:orientation="vertical"
-        app:layout_constraintStart_toEndOf="@+id/btnAgregarPC"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout10">
+        app:layout_constraintStart_toEndOf="@+id/linearLayout9"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnAgregarC"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/alta"
-                android:text="@string/alta" />
-        </LinearLayout>
+            android:orientation="horizontal" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -512,9 +420,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/modif"
-                android:text="@string/mod" />
+                android:backgroundTint="@color/teal_200"
+                android:text="PDF" />
         </LinearLayout>
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
