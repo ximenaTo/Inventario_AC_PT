@@ -12,8 +12,6 @@ import com.ejercicio.inventario_ac_pt.entidades.DetalleVenta;
 import com.ejercicio.inventario_ac_pt.entidades.Producto;
 import com.ejercicio.inventario_ac_pt.entidades.Venta;
 
-import java.util.ArrayList;
-
 public class DBDetalleVenta extends DBHelper {
 
     Context context;
