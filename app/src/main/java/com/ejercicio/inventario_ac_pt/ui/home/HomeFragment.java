@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
     ArrayList<Cliente> listaCliente;
     ArrayList<Vendedor> listaVendedor;
     ArrayList<Producto> listaProducto;
-    ArrayList<DetalleVenta> detalleVenta;
+    ArrayList<DetalleVenta> detalleVenta = new ArrayList<>();;
 
     ArrayList<String> clientes=new ArrayList<String>();
 
@@ -158,7 +158,7 @@ public class HomeFragment extends Fragment {
 
         btnAltaV.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { insertarVenta(detalleVenta);}});
+            public void onClick(View v) { insertarVenta();}});
          /*
 
         btnBajaP.setOnClickListener(new View.OnClickListener() {
@@ -189,17 +189,14 @@ public class HomeFragment extends Fragment {
         DBProducto dbProducto = new DBProducto(getActivity());
         producto= dbProducto.buscarProducto(parts[0]);
 
-        String claveCliente = txtClaveCV.getText().toString();
-        Cliente cliente;
-        DBCliente dbCliente = new DBCliente(getActivity());
-        cliente = dbCliente.buscarCliente(claveCliente);
+
 
         DetalleVenta dv = new DetalleVenta();
-        Venta v = new Venta();
-        detalleVenta = new ArrayList<>();
+
+
 
         cantidad = Integer.parseInt(txtCantidad.getText().toString());
-        producto.setExistencia_p(String.valueOf(Integer.parseInt(producto.getExistencia_p()) - cantidad));
+        //producto.setExistencia_p(String.valueOf(Integer.parseInt(producto.getExistencia_p()) - cantidad));
         precioP = producto.getPrecioCosto_p();
         totalCan = totalCan + cantidad;
         float totalRegistro = precioP * Float.parseFloat(txtCantidad.getText().toString());
@@ -214,28 +211,23 @@ public class HomeFragment extends Fragment {
         dv.setCantidad_ve(cantidad);
         dv.setPrecio_ve(producto.getPrecioCosto_p());
         dv.setImporte_ve(precioP * Float.parseFloat(txtCantidad.getText().toString()));
-        dv.setIdProducto_ve(producto.getId());
+        //dv.setIdProducto_ve(producto.getId());
         dv.setProducto(producto);
 
-        v.setClave_ve(txtNoVenta.getText().toString());
-        v.setFecha_ve(txtFechaVenta.getText().toString());
-        v.setCantidadT_ve(totalCan);
-        v.setIVA(IVA);
-        v.setSubtotal(sumImporte);
-        v.setTotal(sumImporte + IVA);
-        v.setIdProducto_v(producto.getId());
-        v.setIdCliente_v(cliente.getId());
-        v.setCliente(cliente);
-        v.setProducto(producto);
 
-        dv.setVenta(v);
 
         detalleVenta.add(dv);
+        System.out.println("Numero de registros"+detalleVenta.size());
 
         listaProductosVenta();
     }
 
     public void listaProductosVenta(){
+        if(tblProductosV.getChildCount() > 1){
+            tblProductosV.removeViews(1,tblProductosV.getChildCount()-1);
+
+            tblTotalesImporte.removeViewAt(1);
+        }
 
         for(DetalleVenta DVenta: detalleVenta)
         {
@@ -250,7 +242,7 @@ public class HomeFragment extends Fragment {
                 textView.setMinWidth(430);
                 textView.setMaxWidth(435);
                 textView.setGravity(Gravity.CENTER);
-                if(i == 0){ textView.setText(DVenta.getVenta().getClave_ve()); }
+                if(i == 0){ textView.setText(DVenta.getProducto().getClave_p()); }
                 if(i == 1){ textView.setText(DVenta.getProducto().getNombre_p()); }
                 if(i == 2){ textView.setText(DVenta.getUnidad_ve()); }
                 if(i == 3){ textView.setText(DVenta.getProducto().getLinea_p()); }
@@ -259,72 +251,94 @@ public class HomeFragment extends Fragment {
                 if(i == 6){ textView.setText(""+DVenta.getImporte_ve()); }
 
                 tableRow.addView(textView);
-                totalProducto();
-                totalMonetario();
+
             }
             tblProductosV.addView(tableRow);
+            totalProducto();
+            totalMonetario();
         }
 
     }
 
     public void totalProducto(){
+        if( tblTotalCalzado.getChildCount()>1){
+            tblTotalCalzado.removeViewAt(1);
+        }
 
-        for(DetalleVenta DVenta: detalleVenta)
-        {
+
             TableRow tableRow = new TableRow(getActivity());
             tableRow.setLayoutParams(new TableRow.LayoutParams(
                     TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
-            for (int i = 0; i < 1; i++) {
+
                 TextView textView = new TextView(getActivity());
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                 textView.setTextColor(Color.BLACK);
                 textView.setMinWidth(500);
                 textView.setMaxWidth(550);
                 textView.setGravity(Gravity.CENTER);
-                if(i == 0){ textView.setText(""+DVenta.getVenta().getCantidadT_ve()); }
+                textView.setText(""+totalCan);
 
                 tableRow.addView(textView);
-            }
-            tblTotalCalzado.removeViews(1,tblTotalCalzado.getChildCount()-1);
-            tblTotalCalzado.removeViews(1, tblTotalCalzado.getChildCount()-1);
-            tblTotalCalzado.removeViews(1, tblTotalCalzado.getChildCount()-1);
+
+
             tblTotalCalzado.addView(tableRow);
-        }
+
 
     }
 
     public void totalMonetario(){
+        if( tblTotalesImporte.getChildCount()>1){
+            tblTotalesImporte.removeViewAt(1);
+        }
 
-        for(DetalleVenta DVenta: detalleVenta)
-        {
+
             TableRow tableRow = new TableRow(getActivity());
             tableRow.setLayoutParams(new TableRow.LayoutParams(
                     TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 3; i++) {
                 TextView textView = new TextView(getActivity());
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                 textView.setTextColor(Color.BLACK);
                 textView.setMinWidth(410);
                 textView.setMaxWidth(420);
                 textView.setGravity(Gravity.CENTER);
-                if(i == 0){ textView.setText(""+DVenta.getVenta().getSubtotal()); }
-                if(i == 1){ textView.setText(""+DVenta.getVenta().getIVA()); }
-                if(i == 2){ textView.setText(""+DVenta.getVenta().getTotal()); }
+                if(i == 0){ textView.setText(""+sumImporte); }
+                if(i == 1){ textView.setText(""+IVA); }
+                if(i == 2){ textView.setText(""+sumImporte+IVA); }
 
                 tableRow.addView(textView);
             }
-            tblTotalesImporte.removeViews(1,tblTotalesImporte.getChildCount()-1);
-            tblTotalesImporte.removeViews(1, tblTotalesImporte.getChildCount()-1);
-            tblTotalesImporte.removeViews(1, tblTotalesImporte.getChildCount()-1);
+
             tblTotalesImporte.addView(tableRow);
         }
 
-    }
 
-    public void insertarVenta(ArrayList<DetalleVenta>listaDetalle){
 
+    public void insertarVenta(){
+        Venta v = new Venta();
+        String claveCliente = txtClaveCV.getText().toString();
+        Cliente cliente;
+        DBCliente dbCliente = new DBCliente(getActivity());
+        cliente = dbCliente.buscarCliente(claveCliente);
+        v.setClave_ve(txtNoVenta.getText().toString());
+        v.setFecha_ve(txtFechaVenta.getText().toString());
+        v.setCantidadT_ve(totalCan);
+        v.setIVA(IVA);
+        v.setSubtotal(sumImporte);
+        v.setTotal(sumImporte + IVA);
+        //v.setIdProducto_v(0);
+        v.setCliente(cliente);
+
+        DBVenta dbVenta = new DBVenta(getActivity());
+        System.out.println("Cuando entra"+detalleVenta.size());
+       long id= dbVenta.insertarVenta(detalleVenta, v);
+
+
+
+
+        /*
         DBVenta dbVenta = new DBVenta(getActivity());
         DBDetalleVenta dbDVenta = new DBDetalleVenta(getActivity());
 
@@ -372,7 +386,7 @@ public class HomeFragment extends Fragment {
             limpiarFinalizar();
         }else {
             Toast.makeText(getActivity(), "Error al guardar la venta", Toast.LENGTH_LONG).show();
-        }
+        }*/
 
     }
 
