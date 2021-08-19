@@ -64,7 +64,7 @@ public class ClienteFragment extends Fragment {
 
         tblClientes = (TableLayout) root.findViewById(R.id.tblClientes);
 
-        txtSaldoC.setEnabled(false);
+        //txtSaldoC.setEnabled(false);
 
         listaClientes(1);
 

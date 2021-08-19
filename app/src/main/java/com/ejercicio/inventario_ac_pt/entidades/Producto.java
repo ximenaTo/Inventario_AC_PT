@@ -6,6 +6,8 @@ public class Producto {
     String nombre_p ;
     String linea_p ;
     String existencia_p ;
+    String unidad;
+    int cantidad_ve;
     float precioCosto_p ;
     float precioPromedio_p ;
     float precioVenta1_p;
@@ -35,6 +37,14 @@ public class Producto {
     }
 
     public Producto() {
+    }
+
+    public int getCantidad_ve() {
+        return cantidad_ve;
+    }
+
+    public void setCantidad_ve(int cantidad_ve) {
+        this.cantidad_ve = cantidad_ve;
     }
 
     public Producto(int id) {
@@ -75,6 +85,14 @@ public class Producto {
 
     public String getExistencia_p() {
         return existencia_p;
+    }
+
+    public String getUnidad() {
+        return unidad;
+    }
+
+    public void setUnidad(String unidad) {
+        this.unidad = unidad;
     }
 
     public void setExistencia_p(String existencia_p) {

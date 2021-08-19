@@ -34,6 +34,7 @@ public class DBProducto extends DBHelper {
             values.put("clave_p", clave_p);
             values.put("nombre_p", nombre_p);
             values.put("linea_p", linea_p);
+            //values.put("unidad_p", "par");
             values.put("existencia_p", existencia_p);
             values.put("precioCosto_p", precioCosto_p);
             values.put("precioPromedio_p", 0.0);
