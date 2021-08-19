@@ -84,7 +84,7 @@ public class GalleryFragment extends Fragment {
         btnAgregarPC = (Button)  root.findViewById(R.id.btnAgregarPC);
         btnAgregarC = (Button)  root.findViewById(R.id.btnAgregarC);
 
-        tblProductosCompra = (TableLayout) root.findViewById(R.id.tblProductosAC);
+        tblProductosCompra = (TableLayout) root.findViewById(R.id.tblProductos);
 
         tblCantTotal = (TableLayout) root.findViewById(R.id.tblCantidadTotalAC);
         tblTotalesCompra = (TableLayout) root.findViewById(R.id.tblTotalesCA);

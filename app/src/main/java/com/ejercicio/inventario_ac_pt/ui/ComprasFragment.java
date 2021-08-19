@@ -19,13 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ejercicio.inventario_ac_pt.BD.DBCompra;
-import com.ejercicio.inventario_ac_pt.BD.DBProveedor;
-import com.ejercicio.inventario_ac_pt.BD.DBVendedor;
 import com.ejercicio.inventario_ac_pt.R;
 import com.ejercicio.inventario_ac_pt.entidades.Compra;
 import com.ejercicio.inventario_ac_pt.entidades.DetalleCompra;
-import com.ejercicio.inventario_ac_pt.entidades.Proveedor;
-import com.ejercicio.inventario_ac_pt.entidades.Vendedor;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Paragraph;
@@ -67,7 +63,7 @@ public class ComprasFragment extends Fragment {
         btnEliminar = (Button) root.findViewById(R.id.btnEliminarCompra);
         btnPDFCompra =  (Button) root.findViewById(R.id.btnPDFCompra);
 
-        tblProductosAC =  (TableLayout) root.findViewById(R.id.tblProductosAC);
+        tblProductosAC =  (TableLayout) root.findViewById(R.id.tblProductos);
         tblCantidadTotalAC =(TableLayout) root.findViewById(R.id.tblCantidadTotalAC);
         tblTotalesCA = (TableLayout) root.findViewById(R.id.tblTotalesCA);
 

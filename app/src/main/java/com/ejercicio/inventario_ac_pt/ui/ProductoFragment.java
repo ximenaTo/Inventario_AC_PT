@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
@@ -24,23 +23,13 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ejercicio.inventario_ac_pt.BD.DBCliente;
 import com.ejercicio.inventario_ac_pt.BD.DBHelper;
 import com.ejercicio.inventario_ac_pt.BD.DBProducto;
 import com.ejercicio.inventario_ac_pt.BD.DBProveedor;
 import com.ejercicio.inventario_ac_pt.R;
-import com.ejercicio.inventario_ac_pt.entidades.Cliente;
 import com.ejercicio.inventario_ac_pt.entidades.Producto;
 import com.ejercicio.inventario_ac_pt.entidades.Proveedor;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import android.widget.ArrayAdapter;
 
@@ -49,12 +38,8 @@ public class ProductoFragment extends Fragment {
 
     EditText txtClaveP, txtNombrePro, txtExistencia, txtPrecioCosto, txtPrecioVenta1, txtPrecioVenta2, txtPrecioPro;
     Spinner spnLinea;
-    Button btnAltaP, btnBajaP, btnModifP, btnBuscarP, btnPDFPro;
+    Button btnAltaP, btnBajaP, btnModifP, btnBuscarP;
     TableLayout tblProductos;
-
-
-    String NOMBRE_DIRECTORIO = "ProyectoPDFS";
-    String NOMBRE_DOCUMENTO = "ReporteProductos.pdf";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,12 +58,10 @@ public class ProductoFragment extends Fragment {
         btnBajaP = (Button) root.findViewById(R.id.btnBajaP);
         btnModifP = (Button) root.findViewById(R.id.btnModP);
         btnBuscarP = (Button) root.findViewById(R.id.btnBuscarP);
-        btnPDFPro = (Button) root.findViewById(R.id.btnPDFPro);
 
         tblProductos = (TableLayout) root.findViewById(R.id.tblProductos);
 
         spnLinea.setEnabled(false);
-        //txtExistencia.setEnabled(false);;
         txtPrecioVenta1.setEnabled(false);
         txtPrecioVenta2.setEnabled(false);
         //txtPrecioPro.setEnabled(false);
@@ -187,14 +170,6 @@ public class ProductoFragment extends Fragment {
             public void onClick(View view) {
                 String palabra = txtClaveP.getText().toString();
                 buscarProducto(palabra);
-            }
-        });
-
-        btnPDFPro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                crearPDFProductos();
-                Toast.makeText(getActivity(), "SE CREO EL PDF", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -359,79 +334,6 @@ public class ProductoFragment extends Fragment {
             }
         }
         return cursor;
-    }
-
-    public void crearPDFProductos() {
-        ArrayList<Producto> listaProducto;
-        DBProducto dbProducto = new DBProducto(getActivity());
-        listaProducto = new ArrayList<>(dbProducto.listaProductos());
-        Document documento = new Document();
-        try {
-            File file = crearFichero(NOMBRE_DOCUMENTO);
-            FileOutputStream ficheroPDF = new FileOutputStream(file.getAbsolutePath());
-            PdfWriter writer = PdfWriter.getInstance(documento, ficheroPDF);
-
-            //AGREGACION DE LA BASE DE DATOS
-
-            documento.open();
-            documento.add(new Paragraph("REPORTE DE PRODUCTOS \n\n"));
-
-            // Insertamos una tabla
-            PdfPTable tabla = new PdfPTable(8);
-            tabla.addCell("Clave");
-            tabla.addCell("Nombre");
-            tabla.addCell("linea");
-            tabla.addCell("Existencia");
-            tabla.addCell("Precio");
-            tabla.addCell("Precio venta 1");
-            tabla.addCell("Precio venta 2");
-            tabla.addCell("Precio Promedio");
-
-            for(Producto producto: listaProducto){
-                tabla.addCell(producto.getClave_p());
-                tabla.addCell(producto.getNombre_p());
-                tabla.addCell(producto.getLinea_p());
-                tabla.addCell(producto.getExistencia_p());
-                tabla.addCell(""+producto.getPrecioCosto_p());
-                tabla.addCell(""+producto.getPrecioVenta1_p());
-                tabla.addCell(""+producto.getPrecioventa2_p());
-                tabla.addCell(""+producto.getPrecioPromedio_p());
-
-            }
-
-            documento.add(tabla);
-
-        } catch(DocumentException e) {
-        } catch(IOException e) {
-        } finally {
-            documento.close();
-        }
-    }
-
-    public File crearFichero(String nombreFichero) {
-        File ruta = getRuta();
-
-        File fichero = null;
-        if(ruta != null) {
-            fichero = new File(ruta, nombreFichero);
-        }
-        return fichero;
-    }
-
-
-    public File getRuta() {
-        File ruta = null;
-        if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            ruta = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), NOMBRE_DIRECTORIO);
-            if(ruta != null) {
-                if(!ruta.mkdirs()) {
-                    if(!ruta.exists()) {
-                        return null;
-                    }
-                }
-            }
-        }
-        return ruta;
     }
 
 }
