@@ -34,6 +34,7 @@ public class DBProducto extends DBHelper {
             values.put("clave_p", clave_p);
             values.put("nombre_p", nombre_p);
             values.put("linea_p", linea_p);
+            //values.put("unidad_p", "par");
             values.put("existencia_p", existencia_p);
             values.put("precioCosto_p", precioCosto_p);
             values.put("precioPromedio_p", 0.0);
@@ -127,8 +128,8 @@ public class DBProducto extends DBHelper {
             producto.setLinea_p(cursor.getString(3));
             producto.setExistencia_p(cursor.getString(4));
             producto.setPrecioCosto_p(cursor.getFloat(5));
-            producto.setPrecioVenta1_p(cursor.getFloat(6));
-            producto.setPrecioventa2_p(cursor.getFloat(7));
+            producto.setPrecioVenta1_p(cursor.getFloat(7));
+            producto.setPrecioventa2_p(cursor.getFloat(8));
             //producto.setPrecioPromedio_p(cursor.getFloat(8));
 
         }

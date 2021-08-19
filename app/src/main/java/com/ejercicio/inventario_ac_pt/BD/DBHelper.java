@@ -48,7 +48,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "RFC_c TEXT NOT NULL,"+
                 "telefono_c TEXT NOT NULL,"+
                 "email_c TEXT NOT NULL,"+
-                "saldo_c FLOAT  NOT NULL)");
+                "saldo_c FLOAT DEFAULT 0.0)");
 
         sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_PROVEEDOR + "(" +
                 "idProveedor INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -67,9 +67,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 "clave_p TEXT NOT NULL, "+
                 "nombre_p TEXT NOT NULL,"+
                 "linea_p TEXT NOT NULL,"+
+                //"unidad_p TEXT NOT NULL,"+
                 "existencia_p TEXT NOT NULL,"+
                 "precioCosto_p FLOAT  NOT NULL,"+
-                "precioPromedio_p FLOAT  NOT NULL,"+
+                "precioPromedio_p FLOAT  DEFAULT 0.0,"+
                 "precioVenta1_p FLOAT  NOT NULL,"+
                 "precioventa2_p FLOAT  NOT NULL)");
 
@@ -98,12 +99,12 @@ public class DBHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(idProducto_c) REFERENCES "+ TABLE_PRODUCTO +"(idProducto))");
 
 
-
         sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_VENTAS + "(" +
                 "idVenta INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "clave_ve TEXT NOT NULL, "+
                 "fecha_ve TEXT NOT NULL,"+
-                "comision_ve FLOAT NOT NULL ,"+
+                //"comision_ve FLOAT NOT NULL ,"+
+                "cantidadT_ve INTEGER NOT NULL,"+
                 "IVA FLOAT NOT NULL,"+
                 "subtotal FLOAT NOT NULL,"+
                 "total FLOAT NOT NULL,"+
@@ -123,8 +124,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 "idVenta_ve INTEGER NOT NULL,"+
                 "FOREIGN KEY(idVenta_ve) REFERENCES "+ TABLE_VENTAS +"(idVenta)," +
                 "FOREIGN KEY(idProducto_ve) REFERENCES "+ TABLE_PRODUCTO +"(idProducto))");
-
-
 
     }
 
