@@ -335,7 +335,7 @@
             android:layout_height="match_parent">
 
             <TableLayout
-                android:id="@+id/tblProductos"
+                android:id="@+id/tblProductosAC"
                 android:layout_width="1500dp"
                 android:layout_height="wrap_content">
 

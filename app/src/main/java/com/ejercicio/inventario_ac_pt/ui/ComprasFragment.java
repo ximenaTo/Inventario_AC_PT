@@ -63,7 +63,7 @@ public class ComprasFragment extends Fragment {
         btnEliminar = (Button) root.findViewById(R.id.btnEliminarCompra);
         btnPDFCompra =  (Button) root.findViewById(R.id.btnPDFCompra);
 
-        tblProductosAC =  (TableLayout) root.findViewById(R.id.tblProductos);
+        tblProductosAC =  (TableLayout) root.findViewById(R.id.tblProductosAC);
         tblCantidadTotalAC =(TableLayout) root.findViewById(R.id.tblCantidadTotalAC);
         tblTotalesCA = (TableLayout) root.findViewById(R.id.tblTotalesCA);
 

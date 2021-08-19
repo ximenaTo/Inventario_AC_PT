@@ -1,7 +1,5 @@
 package com.ejercicio.inventario_ac_pt.ui;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -23,15 +21,11 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ejercicio.inventario_ac_pt.BD.DBHelper;
 import com.ejercicio.inventario_ac_pt.BD.DBProducto;
-import com.ejercicio.inventario_ac_pt.BD.DBProveedor;
 import com.ejercicio.inventario_ac_pt.R;
 import com.ejercicio.inventario_ac_pt.entidades.Producto;
-import com.ejercicio.inventario_ac_pt.entidades.Proveedor;
 
 import java.util.ArrayList;
-import android.widget.ArrayAdapter;
 
 public class ProductoFragment extends Fragment {
     ArrayList<String> linea=new ArrayList<String>();
@@ -59,7 +53,7 @@ public class ProductoFragment extends Fragment {
         btnModifP = (Button) root.findViewById(R.id.btnModP);
         btnBuscarP = (Button) root.findViewById(R.id.btnBuscarP);
 
-        tblProductos = (TableLayout) root.findViewById(R.id.tblProductos);
+        tblProductos = (TableLayout) root.findViewById(R.id.tblProductosAC);
 
         spnLinea.setEnabled(false);
         txtPrecioVenta1.setEnabled(false);

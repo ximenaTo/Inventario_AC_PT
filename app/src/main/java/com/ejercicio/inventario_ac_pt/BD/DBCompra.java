@@ -145,7 +145,6 @@ public class DBCompra extends DBHelper {
         DetalleCompra detalleCompra = null;
         Producto producto = null;
         Cursor cursor2 = null;
-        int i =1;
         cursor2 = db3.rawQuery("SELECT * FROM " + TABLE_DETALLE_COMPRA + " WHERE idCompra = '"+ idComr + "'", null);
         if (cursor2.moveToFirst()){
             do {
@@ -159,11 +158,10 @@ public class DBCompra extends DBHelper {
 
                 producto = buscar(cursor2.getInt(7));
                 detalleCompra.setProducto(producto);
-                if (i !=1){
-                    listaDC.add(detalleCompra);
-                }
 
-                i++;
+                    listaDC.add(detalleCompra);
+
+
             }while(cursor2.moveToNext());
         }
         compra.setDetalleComprasA(listaDC);
