@@ -48,38 +48,4 @@ public class DBVenta extends DBHelper {
     }
 
 
-    public Venta buscarVenta(String clave){
-        DBVenta dbVenta= new DBVenta(context);
-        SQLiteDatabase  db = dbVenta.getWritableDatabase();
-        Venta venta = null;
-        Producto producto;
-        Cursor cursor = null;
-
-        cursor = db.rawQuery("SELECT * FROM " + TABLE_VENTAS + " WHERE clave_ve = '"+ clave + "'", null);
-        if (cursor.moveToFirst()){
-            producto = new Producto();
-            venta = new Venta();
-            venta.setClave_ve(cursor.getString(1));
-            venta.setCantidadT_ve(cursor.getInt(3));
-            venta.setSubtotal(cursor.getFloat(6));
-            venta.setIVA(cursor.getFloat(5));
-            venta.setTotal(cursor.getFloat(7));
-            producto.setId(cursor.getInt(0));
-            producto.setClave_p(cursor.getString(1));
-            producto.setNombre_p(cursor.getString(2));
-            producto.setLinea_p(cursor.getString(3));
-            producto.setExistencia_p(cursor.getString(4));
-            producto.setPrecioCosto_p(cursor.getFloat(5));
-            producto.setPrecioVenta1_p(cursor.getFloat(7));
-            producto.setPrecioventa2_p(cursor.getFloat(8));
-            venta.setProducto(producto);
-
-        }
-        cursor.close();
-        return  venta;
-
-    }
-
-
-
 }

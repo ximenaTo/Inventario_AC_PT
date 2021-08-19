@@ -375,68 +375,24 @@ public class HomeFragment extends Fragment {
         }
 
     }
-/*
-    public void mostrarVenta(int estatus){
-        ArrayList<Venta> venta;
-        DBVenta dbVenta = new DBVenta(getActivity());
-        venta = new ArrayList(dbVenta.listaProductosVenta(txtClaveCV.getText().toString()));
-
-        if(estatus == 2){
-            tblProductosV.removeViews(1,listaProducto.size()-1);
-        }
-        if(estatus == 0){
-            tblProductosV.removeViews(1,listaProducto.size()+1);
-        }
-        if(estatus == 3){
-            tblProductosV.removeViews(1,listaProducto.size());
-        }
-
-        for(Venta v: venta)
-        {
-            TableRow tableRow = new TableRow(getActivity());
-            tableRow.setLayoutParams(new TableRow.LayoutParams(
-                    TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            for (int i = 0; i < 8; i++) {
-                TextView textView = new TextView(getActivity());
-                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-                textView.setTextColor(Color.BLACK);
-                textView.setMinWidth(375);
-                textView.setMaxWidth(425);
-                textView.setGravity(Gravity.CENTER);
-                if(i == 0){ textView.setText(v.getClave_ve()); }
-                if(i == 1){ textView.setText(v.getProducto().getNombre_p()); }
-                if(i == 2){ textView.setText(v.getProducto().getLinea_p()); }
-                if(i == 3){ textView.setText(v.getProducto().getExistencia_p()); }
-                if(i == 4){ textView.setText(""+v.getProducto().getPrecioCosto_p()); }
-                if(i == 5){ textView.setText(""+v.getProducto().getPrecioVenta1_p()); }
-                if(i == 6){ textView.setText(""+v.getProducto().getPrecioventa2_p()); }
-                if(i == 7){ textView.setText(""+v.getProducto().getPrecioPromedio_p()); }
-
-                tableRow.addView(textView);
-            }
-            tblProductosV.addView(tableRow);
-        }
-
-    }
-
- */
 
     private  void buscarVenta(String palabra){
-        Venta venta =   new Venta();
-        DBVenta dbVenta = new DBVenta(getActivity());
-        venta= dbVenta.buscarVenta(palabra);
+        DetalleVenta dVenta = new DetalleVenta();
 
-        int valorCliente = consultarClientes(venta.getCliente().getNombre_c());
+        DBDetalleVenta dbDVenta = new DBDetalleVenta(getActivity());
+        dVenta= dbDVenta.buscarVenta(palabra);
+
+        int valorCliente = consultarClientes(dVenta.getVenta().getCliente().getNombre_c());
         //int valorVendedor = consultarClientes(venta.getVendedor.getNombre);
 
-        if(venta !=null){
+        if(dVenta !=null){
             spnClienteV.setSelection(valorCliente);
-            txtClaveCV.setText(venta.getCliente().getId());
-            txtClaveCV.setText(venta.getCliente().getCalle_c());
-            txtFechaVenta.setText(venta.getFecha_ve());
+            txtClaveCV.setText(dVenta.getVenta().getCliente().getId());
+            txtCalleCliente.setText(dVenta.getVenta().getCliente().getCalle_c());
+            txtFechaVenta.setText(dVenta.getVenta().getFecha_ve());
             //spnVendedor.setSelection(valorVendedor);
             //txtPrecioPro.setText(""+producto.getPrecioPromedio_p());
+
         }else{
             Toast.makeText(getActivity(), "No se encontro", Toast.LENGTH_LONG).show();
         }

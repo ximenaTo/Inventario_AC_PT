@@ -45,4 +45,58 @@ public class DBDetalleVenta extends DBHelper {
         }
         return id;
     }
+
+    public DetalleVenta buscarVenta(String clave){
+        DBDetalleVenta dbDVenta= new DBDetalleVenta(context);
+        SQLiteDatabase  db = dbDVenta.getWritableDatabase();
+
+        Producto producto = null;
+        DetalleVenta dVenta = null;
+        Venta venta = null;
+        Cliente cliente = null;
+        Cursor cursor = null;
+
+        cursor = db.rawQuery("SELECT * FROM " + TABLE_DETALLE_VENTA + " WHERE clave_c = '"+ clave + "'", null);
+        if (cursor.moveToFirst()){
+            producto = new Producto();
+            dVenta = new DetalleVenta();
+            venta = new Venta();
+            cliente = new Cliente();
+
+            dVenta.setId(cursor.getInt(0));
+            dVenta.setUnidad_ve(cursor.getString(2));
+            dVenta.setCantidad_ve(cursor.getInt(3));
+            dVenta.setPrecio_ve(cursor.getInt(4));
+            dVenta.setImporte_ve(cursor.getInt(5));
+            dVenta.setIdProducto_ve(cursor.getInt(6));
+
+            venta.setClave_ve(cursor.getString(1));
+            venta.setCantidadT_ve(cursor.getInt(3));
+            venta.setSubtotal(cursor.getFloat(6));
+            venta.setIVA(cursor.getFloat(5));
+            venta.setTotal(cursor.getFloat(7));
+
+            producto.setId(cursor.getInt(0));
+            producto.setClave_p(cursor.getString(1));
+            producto.setNombre_p(cursor.getString(2));
+            producto.setLinea_p(cursor.getString(3));
+            producto.setExistencia_p(cursor.getString(4));
+            producto.setPrecioCosto_p(cursor.getFloat(5));
+            producto.setPrecioVenta1_p(cursor.getFloat(6));
+            producto.setPrecioventa2_p(cursor.getFloat(7));
+
+            cliente.setClave_c(cursor.getString(1));
+            cliente.setNombre_c(cursor.getString(2));
+
+            venta.setProducto(producto);
+            venta.setCliente(cliente);
+
+            dVenta.setVenta(venta);
+            dVenta.setProducto(producto);
+
+        }
+        cursor.close();
+        return  dVenta;
+
+    }
 }
