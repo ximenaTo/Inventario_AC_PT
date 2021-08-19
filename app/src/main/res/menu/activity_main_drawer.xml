@@ -13,6 +13,10 @@
             android:icon="@drawable/compra"
             android:title="Compras" />
         <item
+            android:id="@+id/comprasFragment"
+            android:icon="@drawable/compra"
+            android:title="Administracion compra" />
+        <item
             android:id="@+id/proveedorFragment"
             android:icon="@drawable/proveedor"
             android:title="Proveedor" />
@@ -28,5 +32,13 @@
             android:id="@+id/vendedorFragment"
             android:icon="@drawable/vendedor"
             android:title="Vendedores" />
+        <item
+            android:id="@+id/reporteVentaFechaFragment"
+            android:icon="@drawable/reporte"
+            android:title="Reporte venta 1" />
+        <item
+            android:id="@+id/reporteVentaDiaFragment"
+            android:icon="@drawable/reporte"
+            android:title="Reporte venta 2" />
     </group>
 </menu>

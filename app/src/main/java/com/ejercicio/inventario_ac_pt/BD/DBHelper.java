@@ -104,6 +104,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 "clave_ve TEXT NOT NULL, "+
                 "fecha_ve TEXT NOT NULL,"+
                 "comision_ve FLOAT NOT NULL ,"+
+                "IVA FLOAT NOT NULL,"+
+                "subtotal FLOAT NOT NULL,"+
+                "total FLOAT NOT NULL,"+
                 "idProducto_v INTEGER NOT NULL,"+
                 "idCliente_v INTEGER NOT NULL,"+
                 "FOREIGN KEY(idCliente_v) REFERENCES "+ TABLE_CLIENTE +"(idCliente)," +

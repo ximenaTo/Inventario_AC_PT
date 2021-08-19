@@ -23,6 +23,11 @@
         android:label="quitar"
         tools:layout="@layout/fragment_slideshow" />
     <fragment
+        android:id="@+id/comprasFragment"
+        android:name="com.ejercicio.inventario_ac_pt.ui.ComprasFragment"
+        android:label="Administracion Compras"
+        tools:layout="@layout/fragment_compras" />
+    <fragment
         android:id="@+id/proveedorFragment"
         android:name="com.ejercicio.inventario_ac_pt.ui.ProveedorFragment"
         android:label="@string/menu_proveedor"
@@ -42,4 +47,15 @@
         android:name="com.ejercicio.inventario_ac_pt.ui.VendedorFragment"
         android:label="@string/menu_Vendedor"
         tools:layout="@layout/fragment_vendedor" />
+    <fragment
+        android:id="@+id/reporteVentaDiaFragment"
+        android:name="com.ejercicio.inventario_ac_pt.ui.ReporteVentaDiaFragment"
+        android:label="Reporte ventas dia"
+        tools:layout="@layout/fragment_reporte_venta_dia" />
+    <fragment
+        android:id="@+id/reporteVentaFechaFragment"
+        android:name="com.ejercicio.inventario_ac_pt.ui.ReporteVentaFechaFragment"
+        android:label="Reporte ventas fecha"
+        tools:layout="@layout/fragment_reporte_venta_fecha" />
+
 </navigation>
