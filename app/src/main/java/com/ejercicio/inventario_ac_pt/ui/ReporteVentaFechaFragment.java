@@ -8,11 +8,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 
+import com.ejercicio.inventario_ac_pt.BD.DBProducto;
 import com.ejercicio.inventario_ac_pt.R;
+import com.ejercicio.inventario_ac_pt.entidades.Producto;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -20,6 +25,9 @@ import java.util.Locale;
 public class ReporteVentaFechaFragment extends Fragment {
 
     EditText txtFechaInicio, txtFechaFinal;
+
+    Spinner cmbPVR;
+    ArrayList<Producto> listaProducto;
 
 
 
@@ -31,6 +39,8 @@ public class ReporteVentaFechaFragment extends Fragment {
         txtFechaInicio = (EditText) root.findViewById(R.id.txtFechaInicio);
         txtFechaFinal = (EditText) root.findViewById(R.id.txtFechaFinal);
 
+        cmbPVR = (Spinner) root.findViewById(R.id.cmbPVR);
+        listaProducto();
         txtFechaInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,6 +87,17 @@ public class ReporteVentaFechaFragment extends Fragment {
             txtFechaFinal.setText(fecha);   }
 
     };
+
+    private void listaProducto(){
+        DBProducto dbProducto = new DBProducto(getActivity());
+        listaProducto = new ArrayList<>(dbProducto.listaProductos());
+        ArrayList<String> arreglo = new ArrayList<>();
+        for (Producto producto: listaProducto ) {
+            arreglo.add(producto.getClave_p() +" - "+ producto.getNombre_p());
+        }
+        ArrayAdapter<String> producto = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item , arreglo);
+        cmbPVR.setAdapter(producto);
+    }
 
     private void buscarEntreFechas(){
 

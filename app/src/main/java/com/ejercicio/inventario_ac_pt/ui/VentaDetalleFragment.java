@@ -6,6 +6,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+
+import android.os.Environment;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,6 +29,13 @@ import com.ejercicio.inventario_ac_pt.entidades.Compra;
 import com.ejercicio.inventario_ac_pt.entidades.DetalleCompra;
 import com.ejercicio.inventario_ac_pt.entidades.DetalleVenta;
 import com.ejercicio.inventario_ac_pt.entidades.Venta;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 public class VentaDetalleFragment extends Fragment {
@@ -34,6 +45,9 @@ public class VentaDetalleFragment extends Fragment {
     Button btnBuscar,btnBaja,btnPDF;
     Venta ventaA;
     int idVenta;
+
+    String NOMBRE_DIRECTORIO = "ProyectoPDFS";
+    String NOMBRE_DOCUMENTO = "ReporteVenta.pdf";
 
 
     @Override
@@ -60,6 +74,20 @@ public class VentaDetalleFragment extends Fragment {
             public void onClick(View view) {
                 String palabra = txtNoVenta.getText().toString();
                 buscarVenta(palabra);
+            }
+        });
+        btnBaja.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String palabra = txtNoVenta.getText().toString();
+                eliminarVenta(Integer.parseInt(palabra));
+            }
+        });
+        btnPDF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                pdfCompra();
             }
         });
 
@@ -160,4 +188,90 @@ public class VentaDetalleFragment extends Fragment {
         tblImportes.addView(tableRow2);
 
     }
+    private void eliminarVenta(int id){
+        DBVenta dbVenta = new DBVenta(getActivity());
+        boolean eliminado = dbVenta.eliminarVenta(id);
+        if(eliminado == true){
+            Toast.makeText(getActivity(), "Registro eliminado", Toast.LENGTH_LONG).show();
+            //listaProveedores(0);
+            // limpiar();
+        }else {
+            Toast.makeText(getActivity(), "Error eliminado el registro", Toast.LENGTH_LONG).show();
+        }
+
+    }
+    private void pdfCompra(){
+
+        Document documento = new Document();
+        try {
+            File file = crearFichero(NOMBRE_DOCUMENTO);
+            FileOutputStream ficheroPDF = new FileOutputStream(file.getAbsolutePath());
+            PdfWriter writer = PdfWriter.getInstance(documento, ficheroPDF);
+
+            //AGREGACION DE LA BASE DE DATOS
+
+            documento.open();
+            documento.add(new Paragraph("REPORTE DE VENTA \n\n"));
+            documento.add(new Paragraph("No. Compra: "+ ventaA.getId()+" \n"));
+            documento.add(new Paragraph("Proveedor: "+ ventaA.getCliente().getNombre_c()+" \n"));
+            documento.add(new Paragraph("Fecha: "+ ventaA.getFecha_ve()+" \n\n\n"));
+
+            // Insertamos una tabla
+            PdfPTable tabla = new PdfPTable(6);
+            tabla.addCell("Clave");
+            tabla.addCell("Nombre");
+            tabla.addCell("Linea");
+            tabla.addCell("Cantidad");
+            tabla.addCell("Costo");
+            tabla.addCell("Importe");
+
+
+
+            for(DetalleVenta dv: ventaA.getDetalleVentaA()){
+                tabla.addCell(dv.getProducto().getClave_p());
+                tabla.addCell(dv.getProducto().getNombre_p());
+                tabla.addCell(dv.getProducto().getLinea_p());
+                tabla.addCell(dv.getCantidad_ve()+"");
+                tabla.addCell(dv.getPrecio_ve()+"");
+                tabla.addCell(dv.getImporte_ve()+"");
+
+            }
+            documento.add(tabla);
+
+            documento.add(new Paragraph("\n\n"));
+            documento.add(new Paragraph("Subtotal: "+ ventaA.getSubtotal()+" \n"));
+            documento.add(new Paragraph("IVA: "+ ventaA.getIVA()+" \n"));
+            documento.add(new Paragraph("Total: "+ ventaA.getTotal()+" \n"));
+
+        } catch(DocumentException e) {
+        } catch(IOException e) {
+        } finally {
+            documento.close();
+        }
+
+    }
+    public File crearFichero(String nombreFichero) {
+        File ruta = getRuta();
+
+        File fichero = null;
+        if(ruta != null) {
+            fichero = new File(ruta, nombreFichero);
+        }
+        return fichero;
+    }
+    public File getRuta() {
+        File ruta = null;
+        if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            ruta = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), NOMBRE_DIRECTORIO);
+            if(ruta != null) {
+                if(!ruta.mkdirs()) {
+                    if(!ruta.exists()) {
+                        return null;
+                    }
+                }
+            }
+        }
+        return ruta;
+    }
+
 }

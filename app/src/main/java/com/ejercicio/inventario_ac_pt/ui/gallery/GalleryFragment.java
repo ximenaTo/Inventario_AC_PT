@@ -216,6 +216,17 @@ public class GalleryFragment extends Fragment {
             estatus = 1;
         listaProductos(estatus);
 
+
+    }
+
+    private void limpiar(){
+        txtClaveProv.setText("");
+        txtCalleCompra.setText("");
+        txtFechaCompra.setText("");
+        txtCantidadProd.setText("");
+        tblProductosCompra.removeViews(1,tblProductosCompra.getChildCount()-1);
+        tblCantTotal.removeViews(1,tblCantTotal.getChildCount()-1);
+        tblTotalesCompra.removeViews(1,tblTotalesCompra.getChildCount()-1);
     }
 
     public void listaProductos(int estatus){
@@ -313,7 +324,7 @@ public class GalleryFragment extends Fragment {
 
             DBCompra dbCompra = new DBCompra(getActivity());
             long id= dbCompra.insertarCompra(cp, detalleCompraArrayList, precioProms);
-
+            limpiar();
 
         }
 

@@ -43,7 +43,7 @@ public class HomeFragment extends Fragment {
 
     Spinner spnProductosV, spnVendedorV, spnClienteV;
 
-    TextView txtClaveCV, txtCalleCliente, txtNoVenta, txtFechaVenta, txtCantidad;
+    TextView txtClaveCV, txtCalleCliente, txtNoVenta, txtFechaVenta, txtCantidad, txtComisionCliente;
 
     CheckBox chbFacturacion;
 
@@ -82,6 +82,7 @@ public class HomeFragment extends Fragment {
         txtNoVenta =  (TextView) root.findViewById(R.id.txtNoVenta);
         txtFechaVenta = (TextView) root.findViewById(R.id.txtFechaVenta);
         txtCantidad = (TextView) root.findViewById(R.id.txtCantidad);
+        txtComisionCliente = (TextView) root.findViewById(R.id.txtComisionCliente);
 
         chbFacturacion = (CheckBox) root.findViewById(R.id.chbFacturacion);
 
@@ -89,8 +90,6 @@ public class HomeFragment extends Fragment {
         btnAltaV = (Button) root.findViewById(R.id.btnAltaV);
         btnBajaV = (Button) root.findViewById(R.id.btnBajaV);
         btnModifV = (Button) root.findViewById(R.id.btnModiV);
-        btnBuscarV = (Button) root.findViewById(R.id.btnBuscarV);
-        btnPDFV = (Button) root.findViewById(R.id.btnPDFV);
 
         tblProductosV = (TableLayout) root.findViewById(R.id.tblProductosV);
         tblTotalCalzado = (TableLayout) root.findViewById(R.id.tblTotalesCalzado);
@@ -106,7 +105,10 @@ public class HomeFragment extends Fragment {
         chbFacturacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean factura = chbFacturacion.isChecked();
+                if  (chbFacturacion.isChecked() == true){
+                    IVA = (sumImporte * 16) / 100;
+                    totalMonetario();
+                }
 
             }
         });
@@ -204,9 +206,7 @@ public class HomeFragment extends Fragment {
         float totalRegistro = precioP * Float.parseFloat(txtCantidad.getText().toString());
         sumImporte = sumImporte + totalRegistro;
 
-        if  (chbFacturacion.isChecked() == true){
-            IVA = (sumImporte * 16) / 100;
-        }
+
 
         dv.setClave_c(txtNoVenta.getText().toString());
         dv.setUnidad_ve("Par");
@@ -214,7 +214,9 @@ public class HomeFragment extends Fragment {
         dv.setPrecio_ve(producto.getPrecioCosto_p());
         dv.setImporte_ve(precioP * Float.parseFloat(txtCantidad.getText().toString()));
         //dv.setIdProducto_ve(producto.getId());
+
         dv.setProducto(producto);
+
 
 
 
@@ -222,6 +224,9 @@ public class HomeFragment extends Fragment {
         System.out.println("Numero de registros"+detalleVenta.size());
 
         listaProductosVenta();
+        float total = IVA + sumImporte;
+        float comision = total * 0.02f;
+        txtComisionCliente.setText(comision+"");
     }
 
     public void listaProductosVenta(){
@@ -308,7 +313,8 @@ public class HomeFragment extends Fragment {
                 textView.setGravity(Gravity.CENTER);
                 if(i == 0){ textView.setText(""+sumImporte); }
                 if(i == 1){ textView.setText(""+IVA); }
-                if(i == 2){ textView.setText(""+sumImporte+IVA); }
+                float t = sumImporte+IVA;
+                if(i == 2){ textView.setText(""+t); }
 
                 tableRow.addView(textView);
             }
@@ -336,10 +342,11 @@ public class HomeFragment extends Fragment {
         DBVenta dbVenta = new DBVenta(getActivity());
         System.out.println("Cuando entra"+detalleVenta.size());
        long id= dbVenta.insertarVenta(detalleVenta, v);
-
-
-
-
+        Toast.makeText(getActivity(), "venta guardada", Toast.LENGTH_LONG).show();
+        limpiarFinalizar();
+        tblProductosV.removeViews(1,tblProductosV.getChildCount()-1);
+        tblTotalesImporte.removeViews(1,tblTotalesImporte.getChildCount()-1);
+        tblTotalCalzado.removeViews(1,tblTotalCalzado.getChildCount()-1);
         /*
         DBVenta dbVenta = new DBVenta(getActivity());
         DBDetalleVenta dbDVenta = new DBDetalleVenta(getActivity());
@@ -433,6 +440,7 @@ public class HomeFragment extends Fragment {
         int numeroCompra = dbCotizacion.numeroVenta();
         numeroCompra = numeroCompra+1;
         txtNoVenta.setText(numeroCompra+"");
+
     }
 
     private void fechaCompra(){
